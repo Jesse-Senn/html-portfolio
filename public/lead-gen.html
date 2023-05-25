@@ -8,12 +8,12 @@
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="../css/lead-gen.css" />
   </head>
   <body>
-    <h1>TechWave</h1>
+    <h1>Lead Generation Form</h1>
     <p>
-      Leave your contact info and someone will reach out to you as soon as
+      Leave your contact info, and someone will reach out to you as soon as
       possible.
       <br />
     </p>
@@ -24,23 +24,60 @@
       <textarea
         rows="6"
         cols="90"
-        name="Message"
-        inputtype="text"
-        value="clear"
-        onclick="this.value=''">Message Us!
-        </textarea>
-        <br />
-      <input type="submit" value="SEND" />
-     </form> 
+        name="message"
+        placeholder="Message"
+        required
+      ></textarea>
+      <br />
+      <input type="submit" value="CONTACT" onclick="sendEmail(event)" />
+    </form>
     <footer class="footer">
       <div class="footerContainer">
         <p class="copyright">© Jesse Senn 2023</p>
       </div>
-      <h1>DISCLAIMER</h1>
+      <h1>Dev Notes</h1>
       <p>
-        THIS IS A DEMO SITE. NO CONTACT INFO IS ACTUALLY SENT, STORED, OR SAVED
-        ANYWHERE.
+        In this example we have added a JavaScript function called
+        sendEmail(event) that is triggered when the form is submitted. This
+        function prevents the default form submission behavior, gathers the form
+        field values, encodes them using encodeURIComponent, then decodes the
+        data using the decodeURIComponent, and constructs the mailto link. The
+        mailto link is then assigned to window.location.href, which triggers the
+        user's default email client to open with the pre-filled email fields.
+        The email address of the recipient should be replaced with the desired
+        email address.
       </p>
     </footer>
+
+    <script>
+      function sendEmail(event) {
+        event.preventDefault();
+
+        var name = document.querySelector('input[name="name"]').value;
+        var email = document.querySelector('input[name="email"]').value;
+        var phone = document.querySelector('input[name="phone"]').value;
+        var message = document.querySelector('textarea[name="message"]').value;
+
+        var subject = encodeURIComponent("New Lead");
+        var body = encodeURIComponent(
+          "Name: " +
+            name +
+            "\nEmail: " +
+            email +
+            "\nPhone: " +
+            phone +
+            "\nMessage: " +
+            message
+        );
+
+        var mailtoLink =
+          "mailto:jksenn88@gmail.com?subject=" + subject + "&body=" + body;
+
+        // Decode the URL-encoded characters
+        mailtoLink = decodeURIComponent(mailtoLink);
+
+        window.location.href = mailtoLink;
+      }
+    </script>
   </body>
 </html>
